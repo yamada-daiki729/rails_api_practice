@@ -4,7 +4,7 @@ module Api
   module V1
     class ArticlesController < BaseController
       def index
-        render json: 'hello runteq!'
+        render json: 'success'
       end
     end
   end
