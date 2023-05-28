@@ -1,9 +1,16 @@
 RSpec.describe 'Api::V1::Articles', type: :request do
   describe 'GET /articles' do
-    it 'returns text "success"' do
-      get api_v1_articles_path
+    let(:article_num) { 10 }
 
-      expect(body).to eq('success')
+    before do
+      user = create(:user)
+      create_list(:article, article_num, user: user)
+    end
+
+    it 'returns fincle articles in json format' do
+      get api_v1_articles_path, headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', }
+
+      expect(JSON.parse(body)['data'].count).to eq(article_num)
       expect(response).to be_successful
       expect(response).to have_http_status(:ok)
     end

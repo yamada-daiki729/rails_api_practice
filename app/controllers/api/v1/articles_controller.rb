@@ -4,7 +4,10 @@ module Api
   module V1
     class ArticlesController < BaseController
       def index
-        render json: 'success'
+        articles = Article.all
+        byebug
+        json_string = ArticleSerializer.new(articles).serializable_hash.to_json
+        render json: json_string
       end
     end
   end
