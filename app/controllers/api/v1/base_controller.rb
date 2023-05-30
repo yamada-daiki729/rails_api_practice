@@ -6,6 +6,7 @@ module Api
       include Api::ExceptionHandler
 
       private
+
       def form_authenticity_token; end
     end
   end
