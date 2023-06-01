@@ -19,8 +19,9 @@ module Api
           api_key = Apikey.new(user_id: user.id, access_token: generate_access_token, expires_at: Time.current + 1.week)
           if api_key.save
             api_key.access_token
+          else
+            raise 'Failed to create API key'
           end
-          raise "Failed to create API key" unless apikey.save
 
         end
       end
