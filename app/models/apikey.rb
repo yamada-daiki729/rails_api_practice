@@ -3,5 +3,5 @@ class Apikey < ApplicationRecord
 
   validates :access_token, presence: true, uniqueness: true
 
-  scope :still_valid, -> { where('expires_at > ?', Time.now) }
+  scope :still_valid, -> { where('expires_at > ?', Time.current) }
 end
