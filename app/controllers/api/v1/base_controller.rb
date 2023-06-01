@@ -13,17 +13,15 @@ module Api
         # access_tokenがあるか確認しかつ有効期限が過ぎていないtokenを確認する
         if user_has_access_token?(user) && find_valid_access_token(user)
           # 有効期限が切れていないtokenがあるならばそのトークンを返す
-          find_valid_access_token(user).access_token
-        else
-          # access_tokenがないか、有効期限切れているならば新規発行をする
-          api_key = Apikey.new(user_id: user.id, access_token: generate_access_token, expires_at: Time.current + 1.week)
-          if api_key.save
-            api_key.access_token
-          else
-            raise 'Failed to create API key'
-          end
-
+          return find_valid_access_token(user).access_token
         end
+
+        # access_tokenがないか、有効期限切れているならば新規発行をする
+        api_key = Apikey.new(user_id: user.id, access_token: generate_access_token, expires_at: Time.current + 1.week)
+
+        raise 'Failed to create API key' unless api_key.save
+
+        api_key.access_token
       end
 
       def find_valid_access_token(user)
