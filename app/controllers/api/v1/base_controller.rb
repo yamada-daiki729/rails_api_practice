@@ -8,6 +8,33 @@ module Api
       private
 
       def form_authenticity_token; end
+
+      def create_access_token(user)
+        if user_has_access_token?(user) && find_valid_access_token(user) #access_tokenがあるか確認しかつ有効期限が過ぎていないtokenを確認する
+          # 有効期限が切れていないtokenがあるならばそのトークンを返す
+          return find_valid_access_token(user).access_token
+        else
+          # access_tokenがないか、有効期限切れているならば新規発行をする
+          apikey = Apikey.new(user_id: user.id, access_token: generate_access_token , expires_at: Time.now + 1.week )
+          if apikey.save
+            return apikey.access_token
+          else
+            raise "Failed to create API key"
+          end
+        end
+      end
+
+      def find_valid_access_token(user)
+        user.apikeys.still_valid.order(created_at: :desc).first
+      end
+
+      def user_has_access_token?(user)
+        Apikey.exists?(user_id: user.id)
+      end
+
+      def generate_access_token
+        SecureRandom.uuid
+      end
     end
   end
 end

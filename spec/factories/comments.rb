@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :comment do
     user
-    article
-    sequence(:contents) { |n| "Mycontents#{n}" }
+    sequence(:contents) { |n| "MyText#{n}" }
   end
 end

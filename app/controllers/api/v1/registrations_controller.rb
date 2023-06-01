@@ -3,9 +3,10 @@ module Api
     class RegistrationsController < BaseController
       def create
         @user = User.new(user_params)
-
         if @user.save
+          api_key = create_access_token(@user)
           json_string = UserSerializer.new(@user).serialized_json
+          response.headers['AccessToken'] = api_key
           render json: json_string
         else
           render_bad_request(nil, @user.errors.full_messages)
@@ -15,7 +16,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        params.require(:user).permit(:name, :email, :password)
       end
     end
   end
