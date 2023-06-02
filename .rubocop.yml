@@ -40,6 +40,9 @@ Metrics/MethodLength:
   CountComments: false
   Max: 30
 
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
 Naming/AccessorMethodName:
   Exclude:
     - 'app/controllers/**/*'
