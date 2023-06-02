@@ -12,12 +12,15 @@ module Api
 
       def authenticate
         authenticate_or_request_with_http_token do |token, _options|
-          set_current_user(token)
+          current_user(token)
         end
       end
 
-      def current_user
-        @_current_user
+      def current_user(token = nil)
+        return @_current_user if @_current_user
+        return unless token
+
+        @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
       end
 
       def set_current_user(token)
