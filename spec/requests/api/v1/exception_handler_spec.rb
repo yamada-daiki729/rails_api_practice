@@ -1,10 +1,11 @@
 RSpec.describe 'Api::ExceptionHandler', type: :request do
   let!(:user) { create(:user) }
+  let!(:apikey) { create(:apikey, user: user) }
 
   describe 'render 500' do
     it 'returns errors in json format' do
       allow(Article).to receive(:all).and_raise(StandardError)
-      get api_v1_articles_path, headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json' }
+      get api_v1_articles_path, headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{apikey.access_token}" }
 
       expect(body['message']).to eq('Internal Server Error')
       expect(body['errors'].size).to eq(1)
@@ -16,7 +17,7 @@ RSpec.describe 'Api::ExceptionHandler', type: :request do
     let(:id) { 1 }
 
     it 'returns errors in json format' do
-      get api_v1_article_path(id), headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json' }
+      get api_v1_article_path(id), headers: { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{apikey.access_token}" }
 
       expect(body['message']).to eq('Record Not Found')
       expect(body['errors']).to eq(["Couldn't find Article with 'id'=#{id}"])

@@ -1,7 +1,7 @@
 FactoryBot.define do
-  factory :api_key do
-    user { nil }
-    access_token { "MyString" }
-    expires_at { "2020-04-16 21:27:18" }
+  factory :apikey do
+    user
+    sequence(:access_token) { |n| "MyString#{n}" }
+    expires_at { 1.weeks.since }
   end
 end

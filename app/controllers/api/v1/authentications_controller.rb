@@ -1,6 +1,8 @@
 module Api
   module V1
     class AuthenticationsController < BaseController
+      skip_before_action :authenticate
+
       def create
         @user = login(params[:email], params[:password])
         api_key = create_access_token(@user) if @user
