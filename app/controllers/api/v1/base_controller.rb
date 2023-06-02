@@ -12,7 +12,7 @@ module Api
 
       def authenticate
         authenticate_or_request_with_http_token do |token, _options|
-          @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
+          current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
         end
       end
 
@@ -24,7 +24,6 @@ module Api
         api_key = find_valid_access_token(user)
         response.headers['AccessToken'] = api_key
       end
-
 
       private
 
