@@ -16,7 +16,6 @@ RSpec.describe 'Api::V1::Articles', type: :request do
 
       it 'returns articles in json format' do
         http_request
-
         expect(body['data'].count).to eq(article_num)
         expect(response).to be_successful
         expect(response).to have_http_status(:ok)
