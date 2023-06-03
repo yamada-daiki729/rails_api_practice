@@ -31,7 +31,7 @@ module Api
       def destroy
         article = current_user.articles.find(params[:id])
         article.destroy!
-        render json: "削除成功"
+        render json: '削除成功'
       end
 
       private
