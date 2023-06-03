@@ -10,7 +10,7 @@ module Api
 
       protected
 
-      def @_current_user
+      def authenticate
         authenticate_or_request_with_http_token do |token, _options|
           @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
         end
