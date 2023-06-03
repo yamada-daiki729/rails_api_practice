@@ -11,8 +11,8 @@ RSpec.describe 'Api::V1::Articles', type: :request do
     end
 
     context 'with access_token' do
-      let!(:apikey) { create(:apikey, user: user) }
-      let!(:headers) { { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{apikey.access_token}" } }
+      let!(:api_key) { create(:api_key, user: user) }
+      let!(:headers) { { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{api_key.access_token}" } }
 
       it 'returns articles in json format' do
         http_request
@@ -30,8 +30,8 @@ RSpec.describe 'Api::V1::Articles', type: :request do
     let(:http_request) { get api_v1_article_path(article), headers: headers }
 
     context 'with access_token' do
-      let!(:apikey) { create(:apikey, user: user) }
-      let(:headers) { { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{apikey.access_token}" } }
+      let!(:api_key) { create(:api_key, user: user) }
+      let(:headers) { { CONTENT_TYPE: 'application/json', ACCEPT: 'application/json', Authorization: "Bearer #{api_key.access_token}" } }
 
       it 'returns articles in json format' do
         http_request

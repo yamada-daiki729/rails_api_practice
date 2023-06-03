@@ -1,4 +1,4 @@
-class Apikey < ApplicationRecord
+class ApiKey < ApplicationRecord
   belongs_to :user
 
   validates :access_token, presence: true, uniqueness: true

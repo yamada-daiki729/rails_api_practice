@@ -14,7 +14,7 @@ module Api
 
       def authenticate
         authenticate_or_request_with_http_token do |token, _options|
-          @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
+          @_current_user ||= ApiKey.still_valid.find_by(access_token: token)&.user
         end
       end
 
@@ -41,7 +41,7 @@ module Api
         end
 
         # access_tokenがないか、有効期限切れているならば新規発行をする
-        api_key = Apikey.new(user_id: user.id, access_token: generate_access_token, expires_at: Time.current + 1.week)
+        api_key = ApiKey.new(user_id: user.id, access_token: generate_access_token, expires_at: Time.current + 1.week)
 
         raise 'Failed to create API key' unless api_key.save
 
@@ -53,7 +53,7 @@ module Api
       end
 
       def user_has_access_token?(user)
-        Apikey.exists?(user_id: user.id)
+        ApiKey.exists?(user_id: user.id)
       end
 
       def generate_access_token

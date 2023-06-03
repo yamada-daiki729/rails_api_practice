@@ -12,14 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2023_05_31_011435) do
 
-  create_table "apikeys", force: :cascade do |t|
+  create_table "api_keys", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "access_token", null: false
     t.datetime "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["access_token"], name: "index_apikeys_on_access_token", unique: true
-    t.index ["user_id"], name: "index_apikeys_on_user_id"
+    t.index ["access_token"], name: "index_api_keys_on_access_token", unique: true
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2023_05_31_011435) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "apikeys", "users"
+  add_foreign_key "api_keys", "users"
   add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
