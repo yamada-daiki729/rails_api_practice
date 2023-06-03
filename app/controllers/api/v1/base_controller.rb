@@ -10,14 +10,18 @@ module Api
 
       protected
 
+      # rubocop:disable Naming/MemoizedInstanceVariableName
+
       def authenticate
         authenticate_or_request_with_http_token do |token, _options|
-          @authenticate ||= Apikey.still_valid.find_by(access_token: token)&.user
+          @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
         end
       end
 
+      # rubocop:enable Naming/MemoizedInstanceVariableName
+
       def current_user
-        @authenticate
+        @_current_user
       end
 
       def set_access_token!(user)
