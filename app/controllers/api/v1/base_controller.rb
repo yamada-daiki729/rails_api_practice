@@ -10,14 +10,14 @@ module Api
 
       protected
 
-      def authenticate
+      def @_current_user
         authenticate_or_request_with_http_token do |token, _options|
-          @current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
+          @_current_user ||= Apikey.still_valid.find_by(access_token: token)&.user
         end
       end
 
       def current_user
-        @current_user
+        @_current_user
       end
 
       def set_access_token!(user)
