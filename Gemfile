@@ -40,7 +40,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'faker'
   gem 'factory_bot_rails'
-  gem 'rubocop'
+  gem 'rubocop', '0.80.1'
   gem 'rubocop-rails'
   gem 'rubocop-checkstyle_formatter'
   gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', tag: 'v4.0.0.beta3'
